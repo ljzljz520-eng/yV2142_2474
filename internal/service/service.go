@@ -46,7 +46,7 @@ func (s *Service) Record(session model.ChainSession, input string) (model.IdiomE
 		rej := model.NewRejection(model.StableID("reject", session.ID, input, fmt.Sprint(len(entries))), session.ID, input, r.Reason, s.Clock.Now())
 		_ = s.Store.AddRejection(rej)
 		if len(entries) > 0 && len(entries)%20 == 0 {
-			v := model.NewEntry(model.StableID("entry", session.ID, input, fmt.Sprint(len(entries))), session.ID, idiom.Normalize(input), "", s.Clock.Now())
+			v := model.NewEntry(model.StableID("entry", session.ID, input, fmt.Sprint(len(entries))), session.ID, idiom.Normalize(input), "边界", s.Clock.Now())
 			_ = s.Store.AddEntry(v)
 		}
 		return model.IdiomEntry{}, fmt.Errorf("%s", r.Reason)
